@@ -1,0 +1,79 @@
+{% extends 'admin/base.html' %}
+{% set name = name %}
+{% set dropdownPharmacies = dropdownPharmacies %} 
+
+
+{% block title %} Сотрудники {% endblock %}
+
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-2 text-gray-800">Сотрудники</h1>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <a onclick="location.href = document.referrer" class="btn btn-light text-primary"><i class="fas fa-arrow-left"></i> Вернуться </a>
+            <a href="/admin/employees/add" class="btn btn-light text-primary"><i class="fas fa-plus"></i> Новый сотрудник </a>
+
+            <a class="dropdown dropright no-arrow">
+                <a class="btn text-primary btn-light dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-eye text-primary"></i>
+                    <span>Вид</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                    aria-labelledby="dropdownMenuLink">
+                    <div class="dropdown-header">
+                        <h6>Вид</h6>
+                    </div>
+                    <a class="dropdown-item" href="#">Полный список</a>
+                    <a class="dropdown-item" href="#">По аптекам</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Вид ...</a>
+                </div>
+            </div>
+        </a>
+
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover " id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Инициалы</th>
+                            <th>Должность</th>
+                            <th>Аптека</th>
+                            <th>Отдел</th>
+                            <th>Дата трудоустройства</th>
+                        </tr>
+                    </thead>
+
+
+                    <tbody id="tbody">
+                        {% for i in network %}
+                        {% set outer_loop = loop %}
+                        <tr class="employee-row" id="{{i.id}}">
+                            <td> {{i.id}} </td>
+                            <td> {{i.userID.fio}} </td>
+                            <td> {{i.position}} </td>
+                            <td> {{i.pharmacy.name}} </td>
+                            <td> {{i.department.name}} </td>
+                            <td> {{i.employment_date}} </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='admin/table-responsive.js')}}"></script>
+<script src="{{ url_for('static', filename='js/demo/datatables-demo.js')}}"></script>
+<script src="{{ url_for('static', filename='/vendor/datatables/jquery.dataTables.min.js')}}"></script>
+{% endblock %}

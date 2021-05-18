@@ -1,0 +1,85 @@
+{% extends 'selller/base.html' %}
+{% set name = name %}
+{% block idbody %}bg-gradient-primary{% endblock %}
+
+
+{% block title %}
+Список препаратов
+{% endblock %}
+
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Загаловок -->
+    <h1 class="h3 mb-2 text-gray-800">Остатки</h1>
+
+    <!-- Добавить препарат -->
+    <div class="card shadow mb-4">
+        
+        
+        <div class="card-header py-3">
+            <a onclick="location.href = document.referrer" class="btn btn-light text-primary">     <i class="fas fa-arrow-left"> </i> Вернуться </a>
+            <!-- <a href="/selller/add/drug" class="btn     btn-light text-primary">  <i class="fas fa-plus"></i> Добавить препарат </a> -->
+        </div>
+
+
+        <!-- Таблица -->
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Штрих-код</th>
+                            <th>Наимемнование</th>
+                            <th>Категория</th>
+                            <th>Цена <br> закупа</th>
+                            <th>Цена закупа <br> (со скидкой)</th>
+                            <th>Цена <br> продажи</th>
+                            <th>Кол-во</th>
+                            <th>Отдел</th>
+                            <th>Страна <br> производства</th>
+                            <th>Дата</th>
+                            <th>Действие</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for i in data|reverse %}
+                        {% set outer_loop = loop %}
+                        <tr>
+                            <td> {{loop.index}} </td>
+                            <td> {{i.barcode}} </td>
+                            <td> {{i.name}} </td>
+                            <td> {{i.category}} / {{i.subcategory}} </td>
+                            <td> {{i.clean_price}} сом.</td>
+                            <td> {{i.price_with_discount}} сом.</td>
+                            <td> {{i.price_sale}} сом.</td>
+                            <td> {{i.quantity}} {{i.unit}}</td>
+                            <td> {{i.department.name}}</td>
+                            <td> {{i.city_of_dev}} </td>
+                            <td> {{i.shelf_life}} </td>
+                            <td>
+                                <div class="row-2">
+                                    <!-- <a href="/admin/drugs/edit/{{i.pharmacy_id}}/{{i.department_id}}/{{i.id}}"><i class="fas fa-pen"></i> </a> -->
+                                    <a href="/selller/drugs/transfer/{{i.id}}"><i class="fas fa-dolly-flatbed"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table> 
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='js/demo/datatables-demo.js')}}"></script>
+<script src="{{ url_for('static', filename='/vendor/datatables/jquery.dataTables.min.js')}}"></script>
+{% endblock %}

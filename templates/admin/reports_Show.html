@@ -1,0 +1,68 @@
+{% extends 'admin/base.html' %}
+{% set name = name %}
+{% set dropdownPharmacies = dropdownPharmacies %} 
+
+
+{% block title %} Отчет {% endblock %}
+
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-2 text-gray-800">Отчет</h1>
+
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <a onclick="location.href = document.referrer" class="btn btn-light text-primary"> <i class="fas fa-arrow-left"> </i> Вернуться </a>
+        </div>
+
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover " id="dataTable" width="100%" cellspacing="0">
+                    
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Сотрудник</th>
+                            <th>Аптека</th>
+                            <th>Отдел</th>
+                            <th>Дата</th>
+                            <th>Время</th>
+                            <th>Общая сумма</th>
+                            <th>Продано товаров</th>
+                            <th>Авто-перемещение</th>
+                            <th>Способ оплаты</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tbody">
+                        {% for i in payment_data|reverse %}
+                        {% set outer_loop = loop %}
+                            <tr class="report-row" id="{{i.id}}">
+                                <td> {{loop.index}} </td>
+                                <td> {{i.employee.fio}} </td>
+                                <td> {{i.pharmacy.name}} </td>
+                                <td> {{i.department.name}} </td>
+                                <td> {{i.date}} </td>
+                                <td> {{i.time}} </td>
+                                <td> {{i.total_amount}} </td>
+                                <td> {{i.total_sold_product}} </td>
+                                <td> {{i.is_auto_transfer}} </td>
+                                <td> {{i.payment_type}} </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='admin/table-responsive.js')}}"></script>
+<script src="{{ url_for('static', filename='js/demo/datatables-demo.js')}}"></script>
+<script src="{{ url_for('static', filename='/vendor/datatables/jquery.dataTables.min.js')}}"></script>
+{% endblock %}

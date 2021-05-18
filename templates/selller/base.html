@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/plain; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Nappy?">
+
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- <link href="{{ url_for('static', filename='css/my-css.css') }}" rel="stylesheet" type="text/css"> -->
+    <link href="{{ url_for('static', filename='vendor/jqueryUI/jquery-ui.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='vendor/jqueryUI/jquery-ui.theme.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='vendor/jqueryUI/jquery-ui.structure.css') }}" rel="stylesheet" type="text/css">
+
+    
+    <link href="{{ url_for('static', filename='css/sb-admin-2.css') }}" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon">
+    <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet"
+        type="text/css">
+    <link href="{{ url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet"
+        type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+</head>
+
+
+
+<body>
+    <div id="wrapper" class="vh-100">
+        {% block footer %} {% endblock %}
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark toggled sidebar-hide" id="accordionSidebar"
+            style="display: none;">
+            <!-- LOGO -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-pills"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">PAYMONA</div>
+            </a>
+            <hr class="sidebar-divider my-0">
+
+            <!-- Показатели -->
+            <li class="nav-item active">
+                <a class="nav-link" href="/selller/sale">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Продажа</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo1"
+                    aria-expanded="true" aria-controls="collapseTwo1">
+                    <i class="fas fa-clinic-medical"></i>
+                    <span>Препараты</span>
+                </a>
+                <div id="collapseTwo1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="/selller/show/drug">Список препаратов</a>
+                        <!-- <a class="collapse-item" href="/selller/add/drug">Добавить Препарат</a> -->
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo2"
+                    aria-expanded="true" aria-controls="collapseTwo2">
+                    <i class="fas fa-clinic-medical"></i>
+                    <span>Клиенты</span>
+                </a>
+                <div id="collapseTwo2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="/selller/show/client">Список клиентов</a>
+                        <a class="collapse-item" href="/selller/add/client">Добавить клиента</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/selller/purchase/show">
+                    <i class="fas fa-cart-plus"></i>
+                    <span>Закуп</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/selller/show/report">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Отчет</span>
+                </a>
+            </li>
+
+        </ul>
+
+        <!-- ===================================================================================== -->
+
+        <!-- Основная часть, где будет размещен контент -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <!-- Шаблон навигационной панели (ВЕРХУШКА) -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <button id="sidebarToggleTop" class="btn btn-link rounded-circle"
+                        title="Скрыть/Показать боковую панель">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <div class="topbar-divider d-sm-block"></div>
+
+                    <button class="btn btn-link rounded-circle" onclick="window.location.reload()"
+                        title="Обновить страницу">
+                        <i class="fas fa-sync-alt text-success"></i>
+                    </button>
+
+                    <button class="btn" id="buttonHere"><i class="fas fa-calendar"></i></button>
+                    <div class="ui-front" id="datepicker"></div>
+
+                    <span id="dateToDay" style="margin-left: 45%;position: absolute;"></span>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Nav Item - Alerts -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle text-lg" href="#" id="alertsDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw"></i>
+                                <!-- Counter - Alerts -->
+                                <span class="badge badge-danger badge-counter">3+</span>
+                            </a>
+                            <!-- Dropdown - Alerts -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">
+                                    Alerts Center
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-primary">
+                                            <i class="fas fa-file-alt text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">December 12, 2019</div>
+                                        <span class="font-weight-bold">A new monthly report is ready to
+                                            download!</span>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-success">
+                                            <i class="fas fa-donate text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">December 7, 2019</div>
+                                        $290.29 has been deposited into your account!
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-warning">
+                                            <i class="fas fa-exclamation-triangle text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">December 2, 2019</div>
+                                        Spending Alert: We've noticed unusually high spending for your account.
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All
+                                    Alerts</a>
+                            </div>
+                        </li>
+
+                        <!-- Nav Item - Messages -->
+                        <li class="nav-item dropdown no-arrow mx-1 text-lg">
+                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-envelope fa-fw"></i>
+                                <!-- Counter - Messages -->
+                                <span class="badge badge-danger badge-counter">7</span>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="messagesDropdown">
+                                <h6 class="dropdown-header"> Message Center </h6>
+                                <a class="dropdown-item d-flex align-items-center">
+                                    <div class="dropdown-list-image mr-3">
+                                        <div class="status-indicator bg-success"></div>
+                                    </div>
+                                    <div class="font-weight-bold">
+                                        <div class="text-truncate">
+                                            Hi there! I am wondering if you can help mewith a problem I've been having.
+                                        </div>
+                                        <div class="small text-gray-500">Emily Fowler · 58m</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center">
+                                    <div class="dropdown-list-image mr-3">
+                                        <div class="status-indicator"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">
+                                            I have the photos that you ordered last month, how would you like them sent
+                                            to you?
+                                        </div>
+                                        <div class="small text-gray-500">Jae Chun · 1d</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center">
+                                    <div class="dropdown-list-image mr-3">
+                                        <div class="status-indicator bg-warning"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">
+                                            Last month's report looks great, I am very happy with the progress so far,
+                                            keep up the good work!
+                                        </div>
+                                        <div class="small text-gray-500">Morgan Alvarez · 2d</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center">
+                                    <div class="dropdown-list-image mr-3">
+                                        <div class="status-indicator bg-success"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">
+                                            Am I a good boy? The reason I ask is because someone
+                                            told me that people say this to all dogs, even if they aren't good...
+                                        </div>
+                                        <div class="small text-gray-500">Chicken the Dog · 2w</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500">Read More Messages</a>
+                            </div>
+                        </li>
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" id="userDropdown" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <h4 class="mr-2 d-none d-lg-inline text-gray-600">{{name}}</h4>
+                                <img class="img-profile rounded-circle"
+                                    src="{{ url_for('static', filename='img/undraw_profile.svg')}}">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Профиль
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Настройки
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Действия
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Выход
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+
+                <!-- Импортируемый код -->
+                {% block content %}{% endblock %}
+
+                <!-- Кнопка возвращение ползунка на самый верх # => приводит без id  к верху-->
+                <a class="scroll-to-top rounded">
+                    <i class="fas fa-angle-up"></i>
+                </a>
+
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; Paymona 2021</span>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+<!-- Модальное окно для выхода из учетной записи-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Выход</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Вы действительно хотите выйти?
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Отмена</button>
+                <a class="btn btn-primary" href="/admin/logout">Выход</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- MAIN FUNCTION ON ALL FILES -->
+<script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js')}}"></script>
+<script src="{{ url_for('static', filename='vendor/jqueryUI/jquery-ui.js')}}"></script>
+<script src="{{ url_for('static', filename='js/sb-admin-2.js')}}"></script>
+<script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{ url_for('static', filename='vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+<!-- <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.min.js')}}"></script> -->
+
+{% block script %}{% endblock %}
+
+</html>

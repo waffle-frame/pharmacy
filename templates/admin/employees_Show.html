@@ -1,0 +1,78 @@
+{% extends 'admin/base.html' %}
+{% set name = name %}
+{% set dropdownPharmacies = dropdownPharmacies %}
+
+
+{% block title %} О сотруднике {% endblock %}
+
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-2 text-gray-800">Подробнее о сотруднике</h1>
+
+    <a onclick="location.href = document.referrer" class="btn btn-light text-primary mt-2 mb-4"><i class="fas fa-arrow-left"></i> Вернуться </a>
+
+    <div class="row mb-3">
+        <div class="col">
+            <div class="employees-personal-shadow-box">
+                <h1 class="h3 mb-1 text-right text-gray-800">Личные данные</h1>
+                <h4><b>Логин: </b>         {{passport.employeeID.userID.username}} </h4>
+                <h4><b>Пароль: </b>        {{passport.employeeID.userID.password}} </h4>
+                <hr>
+                <h4><b>Ф.И.О: </b>         {{passport.employeeID.userID.fio}} </h4>
+                <h4><b>Дата рождение: </b> {{passport.employeeID.birthday}} </h4>
+                <h4><b>Моб.телефон: </b>   {{passport.employeeID.phone}} </h4>
+                <h4><b>Место проживания:</b> ... </h4>
+                <hr>
+                <h4><b>Аптека: </b>        {{passport.employeeID.pharmacy.name}} </h4>
+                <h4><b>Отдел: </b>         {{passport.employeeID.department.name}} </h4>
+                <h4><b>Должность: </b>     {{passport.employeeID.position}} </h4>
+                <h4 class="mb-5"><b> Дата трудоустройства: </b> {{passport.employeeID.employment_date}} </h4>
+
+                <h1 class="h3 mb-1 text-right text-gray-800">Паспортные данные</h1>
+                <h4><b>Номер паспорта: </b>{{passport.passportID}}</h4>
+                <h4><b>ИНН: </b>{{passport.INN}}</h4>
+                <h4><b>Дата выдачи: </b>{{passport.date_of_Issue}}</h4>
+                <h4><b>Дата истечения срока: </b>{{passport.date_of_Expiration}}</h4>
+                <h4><b>Место выдачи: </b>{{passport.place_of_Issue}}</h4>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="employees-workingshift-shadow-box">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover " id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Начало смены</th>
+                                    <th>Конец смены</th>
+                                    <th>Продано товаров</th>
+                                    <th>Сумма с продаж</th>
+                                </tr>
+                            </thead>
+        
+        
+                            <tbody id="tbody">
+                                {% for i in network %}
+                                {% set outer_loop = loop %}
+                                <tr class="employee-row" id="{{i.id}}">
+                                    <td> {{i.id}} </td>
+                                    <td> {{i.userID.fio}} </td>
+                                    <td> {{i.position}} </td>
+                                    <td> {{i.pharmacy.name}} </td>
+                                    <td> {{i.department.name}} </td>
+                                    <td> {{i.employment_date}} </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

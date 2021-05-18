@@ -1,0 +1,96 @@
+{% extends 'admin/base.html' %}
+{% set name = name %}
+{% set dropdownPharmacies = dropdownPharmacies %} 
+
+
+{% block title %} Управление Аптеками {% endblock %}
+
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-2 text-gray-800">Аптеки</h1>
+
+    <!-- Список клиентов данного юзера -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <a onclick="location.href = document.referrer" class="btn btn-light text-primary"> <i class="fas fa-arrow-left"></i> Вернуться </a>
+            <a href="pharmacies/add" class="btn btn-light text-primary"><i class="fas fa-plus"></i>Новая аптека</a>
+            <a href="pharmacies/archive" class="btn btn-light text-primary"><i class="fas fa-th-list"></i>Архив</a>
+        </div>
+
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Название</th>
+                            <th>Адрес</th>
+                            <th>Действие</th>
+                        </tr>
+                    </thead>
+
+                    <tfoot>
+                        <tr>
+                            <th>№</th>
+                            <th>Название</th>
+                            <th>Адрес</th>
+                            <th>Действие</th>
+                        </tr>
+                    </tfoot>
+
+                    <tbody>
+                        {% for i in pharmacy %}
+                        <tr>
+                            <td> {{loop.index}} </td>
+                            <td> {{i.name}} </td>
+                            <td> {{i.address}} </td>
+                            <td>
+                                <a href="/admin/pharmacies/edit/{{i.id}}"> <i class="fas fa-pen"></i></a>
+                                <a href="#modal{{i.id}}" class="btn" data-toggle="modal"><i class="fa fa-download text-danger"></i></a>
+
+                                <!-- Реакция кнопок -->
+                                <div id="modal{{i.id}}" class="modal fade" name="{{i.name}}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Вы уверены?</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-hidden="true">×</button>
+                                            </div>
+                                            
+                                            <div class="modal-body">
+                                                <p>Аптека: <b>{{i.name}}</b> 
+                                                <p>Данная аптека будет отключена.</p>
+
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                                                <button class="btn btn-primary" type="submit" onclick="window.location.href=`/admin/pharmacies/disable/{{i.id}}`">Продолжить
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='js/demo/datatables-demo.js')}}"></script>
+<script src="{{ url_for('static', filename='/vendor/datatables/jquery.dataTables.min.js')}}"></script>
+{% endblock %}

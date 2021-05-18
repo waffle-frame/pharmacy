@@ -1,0 +1,216 @@
+{% extends 'admin/base.html' %}
+{% set name = name %}
+{% set dropdownPharmacies = dropdownPharmacies %}
+
+
+{% block title %} Новый сотрудник {% endblock %}
+
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-4 text-gray-800 text-center">Новый сотрудник</h1>
+
+    <a onclick="location.href = document.referrer" class="btn btn-light text-primary position-absolute"><i class="fas fa-arrow-left"></i> Вернуться </a>
+
+    <form method="POST">
+        <div class="container w-60">
+
+            <div class="accordion" id="accordionExample">
+                <div class="card">
+                    <div class="card-header bg-primary" id="headingOne">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link text-white" type="button" id="personal-data" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> Личные данные </button>
+                        </h2>
+                    </div>
+
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <div>
+                                <label for="surname">Фамилия</label>
+                                <div class="form-group">
+                                    <input class="checkToValid personal form-control" id="surname" placeholder="Инициалы сотрудника">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="name">Имя</label>
+                                <div class="form-group">
+                                    <input class="checkToValid personal form-control" id="name"
+                                        placeholder="Инициалы сотрудника">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="middleName">Отчество</label>
+                                <div class="form-group">
+                                    <input type="checkbox" id="no-middleName"> <span>Без отчества</span>
+                                    <input class="checkToValid personal form-control" id="middleName"
+                                        placeholder="Инициалы сотрудника">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="birthday">Дата рождение</label>
+                                <div class="form-group">
+                                    <input class="checkToValid personal form-control" type="date" id="birthday" min="1997-01-01"
+                                        max="2030-12-31">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="login">Логин</label>
+                                <div class="form-group">
+                                    <input type="checkbox" id="auto-generate_login"> <span>Авто-генерация</span>
+                                    <input class="checkToValid personal form-control" id="login">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="position">Должность</label>
+                                <div class="form-group">
+                                    <select class="checkToValid personal form-control" id="position">
+                                        <option value="Кассир"> Кассир</option>
+                                        <option value="Бухгалтер"> Бухгалтер</option>
+                                        <option value="Уборщик"> Уборщик</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="phone">Моб.телефон</label>
+                                <div class="form-group">
+                                    <input class="checkToValid personal form-control" type="number" id="phone"
+                                        title="Значение не соответствует" placeholder="93XXXXXXX">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="placeOfResidence">Место проживания</label>
+                                <div class="form-group">
+                                    <input class="checkToValid personal form-control" id="placeOfResidence"placeholder="г.Душанбе, ул.Рахмона Набиева, д. 22 А">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <label for="pharmacy">Аптека</label>
+                                    <div class="form-group">
+                                        <select class="checkToValid personal form-control" id="pharmacy">
+                                            <option disabled selected>Выберите аптеку</option>
+                                            {% for i in pharmaciesList %}
+                                            <option value="{{i.id}}">{{i.name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <label for="department">Отдел</label>
+                                    <div class="form-group">
+                                        <select class="checkToValid form-control" id="department"></select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <footer>
+                                <input class="align-items-right btn btn-info" type="button" id="next" value="Далее">
+                            </footer>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header bg-gray-300" id="headingTwo">
+                      <h2 class="mb-0">
+                        <button class="btn text-gray-900 collapsed" disabled id="passport-data" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"> Паспортные данные </button>
+                      </h2>
+                    </div>
+
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <div>
+                                <label for="passportID">Номер паспорта</label>
+                                <div class="form-group">
+                                    <input class="checkToValid form-control" id="passportID" placeholder="">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="INN">ИНН</label>
+                                <div class="form-group">
+                                    <input class="checkToValid form-control" type="number" id="INN" placeholder="">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="dateOfIssue">Дата выдачи</label>
+                                <div class="form-group">
+                                    <input class="checkToValid form-control" type="date" id="dateOfIssue" placeholder="">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="dateOfExpiration">Дата истечения срока</label>
+                                <div class="form-group">
+                                    <input class="checkToValid form-control" type="date" id="dateOfExpiration">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="placeOfIssue">Место выдачи</label>
+                                <div class="form-group">
+                                    <input class="checkToValid form-control" id="placeOfIssue">
+                                </div>
+                            </div>
+
+                            <footer>
+                                <input class="btn btn-primary mt-3" type="submit" id="modalSubmit" value="Добавить">
+                            </footer>
+                        </div>
+                    </div>
+                </div>
+
+            </div>        
+        </div>
+    </form>
+</div>
+</div>
+
+
+<!-- Modal window -->
+<div id="modalInfo" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h1 class="modal-title text-success">Успешно</h1>
+            </div>
+
+            <div class="modal-body">
+                <h3 id="modal-success"></h3>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="modalError" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h1 class="modal-title text-danger">Ошибка</h1>
+            </div>
+
+            <div class="modal-body">
+                <h3 id="modal-error"></h3>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='Simple_Fetch.js')}}"></script>
+<script src="{{ url_for('static', filename='admin/employees_add.js')}}"></script>
+{% endblock %}

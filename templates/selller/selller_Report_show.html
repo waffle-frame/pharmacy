@@ -1,0 +1,73 @@
+{% extends 'selller/base.html' %}
+{% set name = name %}
+{% block idbody %}bg-gradient-primary{% endblock %}
+
+
+{% block title %}
+Список препаратов
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+    <!-- Загаловок -->
+    <h1 class="h3 mb-2 text-gray-800">Подробнее о продаже</h1>
+
+    <!-- Добавить препарат -->
+    <div class="card shadow mb-4">
+
+
+        <div class="card-header py-3">
+            <a onclick="location.href = document.referrer" class="btn btn-light text-primary"> <i class="fas fa-arrow-left"> </i> Вернуться
+            </a>
+        </div>
+
+
+        <!-- Таблица -->
+        <div class="card-body">
+            <div class="table-responsive">
+
+                <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th><i class="fas fa-scroll"></i> Наименование</th>
+                            <th><i class="fa fa-shopping-basket"></i>Продано </th>
+                            <th><i class="fas fa-coins"></i> Общая сумма</th>
+                            <th><i class="fas fa-percent"></i> Скидка </th>
+                            <th>Авто-перемещение</th>
+                            <th>Способ оплаты</th>
+                            <th>Дата</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tbody">
+                        {% for i in getReport_byID %}
+                        {% set outer_loop = loop %}
+                            <tr>
+                                <td> {{loop.index}} </td>
+                                <td> {{i.drug_id.name}} </td>
+                                <td> {{i.total_quantity_sold}} </td>
+                                <td> {{i.total_amount_sold}} </td>
+                                <td> {{i.discount}} </td>
+                                <td> {{i.payment.is_auto_transfer}} </td>
+                                <td> {{i.payment.payment_type}} </td>
+                                <td> {{i.payment.date}} </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='selller/report.js')}}"></script>
+<script src="{{ url_for('static', filename='js/demo/datatables-demo.js')}}"></script>
+<script src="{{ url_for('static', filename='/vendor/datatables/jquery.dataTables.min.js')}}"></script>
+{% endblock %}

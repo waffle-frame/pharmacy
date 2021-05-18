@@ -1,0 +1,230 @@
+{% extends 'selller/base.html' %}
+{% set name = name %}
+{% block idbody %}bg-gradient-primary{% endblock %}
+
+
+{% block title %}
+Добавление нового лекарства
+{% endblock %}
+
+
+
+{% block footer %}
+<footer class="sticky-footer position-fixed"
+    style="border-top: 1px solid #bfc7e1;z-index: 10009;width: 100%;bottom: 0px;background-color: #fff;padding: 15px 20px;">
+    <div class="container d-flex justify-content-around">
+
+        <h1 id="qnt" class="text-black">Кол-во: <span>0.00</span></h1>
+        <h1 id="sum" class="text-black">Итог: <span>0.00</span></h1>
+
+        <input id="toPaymentModal" type="button" value="К оплате" class="btn text-white btn-success">
+    </div>
+</footer>
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container-fluid">
+    <form class="POST row-without-margin d-flex justify-content-between">
+        <div class="col-6">
+            <div class="row mb-4">
+                <h3 class="mb-0" for="search">Наименование</h3>
+                <input class="is-invalid form-control font-size-big mb-2" id="search" type="text"
+                    placeholder="Введите название" autofocus>
+                <div class="searchList-hide list-group" id="filtred-items-paste"></div>
+
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="radioBarcode" id="radioBarcode"
+                        value="option1" />
+                    <label class="form-check-label" for="radioBarcode">Штрих-код</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" checked type="radio" name="radioBarcode" id="radioName"
+                        value="option2" />
+                    <label class="form-check-label" for="radioName">Наименование</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <h3 class="mb-0" for="quantity">Количество</h3>
+                <div class="input-group mb-0">
+                    <input class="is-invalid checkToValid form-control font-size-big" min="0.1" step="0.1"
+                        name="quantity" id="quantity" type="number" placeholder="Укажите количество">
+                    <div class="input-group-prepend">
+                        <div id="fromGroupText" class="input-group-text font-size-big w-auto">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4 mb-5">
+                <button id="subbtn" class="btn btn-success">Добавить</button>
+            </div>
+
+            <div class="row mb-3">
+                <i class="fas fa-info text-primary mr-2" style="
+                border-radius: 100%;
+                height: 2.2rem;
+                width: 1.4rem;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;"></i>
+                <h3 class="font-weight-bold text-secondary ">Инфо о препарате:</h3>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <h4>Наименование:</h4>
+                    <h4>Страна производства:</h4>
+                    <h4>В наличии:</h4>
+                    <h4>Цена за штуку:</h4>
+                </div>
+                <div class="col" id="info"></div>
+            </div>
+        </div>
+
+
+        <div class="col-5-5 mt-4">
+            <div class="card-body p-0">
+                <div class="table-responsive border-product-table" id="receipt">
+                    <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>№</th>
+                                <th>Наименование</th>
+                                <th>Кол-во</th>
+                                <th>Цена продажи</th>
+                                <th>Скидка </th>
+                                <th>Действие</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="paste"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+
+<!-- Modal window -->
+<div id="modalInfo" class="modal fade in" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark">
+
+            <div class="modal-header">
+                <h1 class="modal-title text-success-light">Успешно</h5>
+            </div>
+
+            <div class="modal-body">
+                <h1 class="text-white" id="modal-success"> Оплата успешна произведена </h1>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="modalPayment" class="modal fade in" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h1 class="modal-title text-white">Оплата</h5>
+            </div>
+
+            <div class="modal-body">
+                <div class="row mb-2">
+                    <div class="col">
+                        <label class="form-check-label text-white">Способ оплаты</label>
+                        <select class="checkToValid form-control text-lg" id="payment-type" required>
+                            <option>Наличные</option>
+                            <option>Картой</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col">
+                        <label class="form-check-label text-white">Принятая сумма</label>
+                        <input class="form-control text-lg" type="number" id="amount-accepted" autofocus>
+                    </div>
+                    <div class="col">
+                        <label class="form-check-label text-white">Сдача</label>
+                        <input class="form-control-modal text-lg" id="surrender" value="0" disabled>
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <div class="col-3">
+                        <label class="form-check-label text-white">Тип клиента:</label>
+                        <div class="form-check">
+                            <input class="form-check-input text-lg" checked name="origin-customer" type="radio"
+                                id="origin-customer" />
+                            <label class="form-check-label text-white" for="origin-customer">Обычный</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input text-lg" type="radio" name="origin-customer"
+                                id="regular-customer" />
+                            <label class="form-check-label text-white" for="regular-customer">Постоянный</label>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <label class="text-white">Ф.И.О</label>
+                        <select class="checkToValid form-control-modal text-lg" id="customer-name" disabled required>
+                            <option selected disabled>--------------------------------------</option>
+                            {% for i in customer %}
+                            <option id='{{i.id}}'>{{i.fio}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col">
+                        <label class="text-white">Моб.телефон</label>
+                        <select class="checkToValid form-control-modal text-lg no-arrow" id="customer-phone" disabled
+                            required>
+                            <option selected disabled></option>
+                            {% for i in customer %}
+                            <option>{{i.phone}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="row-col">
+                    <input class="btn btn-primary" id="payment" type="button" value="Оплата">
+                    <input class="btn btn-success" type="button" value="Оплата + чек">
+                    <input class="btn btn-light" type="button" value="Добавить очередь">
+                    <input class="btn btn-light close" type="button" data-dismiss="modal" value="Отмена" aria-label="Close">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="modalError" class="modal fade in" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark">
+
+            <div class="modal-header">
+                <h1 class="modal-title text-danger">Ошибка</h5>
+            </div>
+
+            <div class="modal-body">
+                <h1 class="text-white" id="modal-error"></h1>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block script %}
+<script src="{{ url_for('static', filename='selller/sale.js')}}"></script>
+<script src="{{ url_for('static', filename='selller/search.js')}}"></script>
+<script src="{{ url_for('static', filename='selller/customers.js')}}"></script>
+{% endblock %}

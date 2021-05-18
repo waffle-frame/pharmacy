@@ -1,0 +1,122 @@
+{% extends 'admin/base.html' %}
+{% set name = name %}
+{% set dropdownPharmacies = dropdownPharmacies %} 
+
+
+{% block title %} Изменение данных препарата {% endblock %}
+
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-4 text-gray-800 text-center">Редактирование данных препарата</h1>
+
+    <a onclick="location.href = document.referrer" class="btn btn-light text-primary position-absolute"><i class="fas fa-arrow-left"></i> Вернуться </a>
+
+    <form method="POST">
+        <div class="container w-50" >
+
+            <div class="row">
+                <div class="col">
+                    <label for="pharmacy">Аптека</label>
+                    <input class="form-control" type="text" id="pharmacy" value="{{drug.pharmacy.name}}" readonly>
+                </div>
+
+                <div class="col">
+                    <label for="department">Отдел</label><br>
+                    <input class="form-control" type="text" id="department" value="{{drug.department.name}}" readonly>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col">
+                    <label for="category">Категория</label>
+                    <select class="checkToValid form-control" id="category">
+                        <option disabled selected>Укажите категорию</option>
+                        <option disabled selected hidden value="{{drug.category}}">{{drug.category}}</option>
+                        <option value="1">Лекарственные средства</option>
+                        <option value="2">Витамины и БАД</option>
+                        <option value="3">Лечебные травы</option>
+                        <option value="4">Мама и малыш</option>
+                        <option value="5">Первая помощь</option>
+                        <option value="6">Мед. приборы</option>
+                        <option value="7">Мед. изделия</option>
+                    </select>
+                </div>
+
+                <div class="col">
+                    <label for="subcategory">Подкатегория</label>
+                    <select class="checkToValid form-control" id="subcategory">
+                        <option disabled selected hidden value="{{drug.category}}">{{drug.category}}</option>
+                        <option disabled>Укажите значение после выбора категории</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-3 form-group">
+                    <label for="barcode">Штрих-код</label>
+                    <input class="checkToValid form-control" type="number" id="barcode" value="{{drug.barcode}}" placeholder="Введите данные">
+                </div>
+                
+                <div class="col form-group">
+                    <label for="name">Наименование</label>
+                    <input class="checkToValid form-control" type="text" id="name" value="{{drug.name}}" placeholder="Введите данные">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="price">Цена</label>
+                <input class="checkToValid form-control" type="number" id="price" value="{{drug.price}}" min="0.1" step="0.1" placeholder="Введите данные">
+            </div>
+
+            <div class="form-group">
+                <label for="shelf_life">Срок годности</label>
+                <input class="checkToValid form-control" type="date" id="shelf_life" value="{{drug.shelf_life}}" placeholder="Введите данные">
+            </div>
+
+            <input class="btn btn-primary mt-3" type="submit" id="modalSubmit" value="Обновить">
+            <button class="btn btn-primary mt-3" type="reset">Сбросить</button>
+
+        </div>
+    </form>
+</div>
+</div>
+
+<!-- Modal window -->
+<div id="modalInfo" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h1 class="modal-title text-success">Успешно</h1>
+            </div>
+
+            <div class="modal-body">
+                <h3 id="modal-success"></h3>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="modalError" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h1 class="modal-title text-danger">Ошибка</h1>
+            </div>
+
+            <div class="modal-body">
+                <h3 id="modal-error"></h3>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block script %}
+<script src="{{ url_for('static', filename='Simple_Fetch.js')}}"></script>
+<script src="{{ url_for('static', filename='subcategory.js')}}"></script>
+{% endblock %}

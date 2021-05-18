@@ -1,0 +1,77 @@
+{% extends 'admin/base.html' %} 
+{% set name = name %}
+{% set dropdownPharmacies = dropdownPharmacies %} 
+
+
+{% block title %} Новая аптека {% endblock %}
+
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-4 text-gray-800 text-center">Добавление новой аптеки</h1>
+
+    <a onclick="location.href = document.referrer" class="btn btn-light text-primary position-absolute"><i class="fas fa-arrow-left"></i> Вернуться </a>
+
+    <form method="POST">
+        <div class="container w-50">
+            <label for="name">Название</label>
+            <div class="form-group">
+                <input class="checkToValid form-control" type="text" id="name" placeholder="Введите название аптеки">
+            </div>
+
+            <label for="address">Адрес</label>
+            <div class="form-group">
+                <input class="checkToValid form-control" id="address" placeholder="Адрес">
+            </div>
+
+            <label for="department">Отдел(ы)</label>
+            <div class="form-group d-flex justify-content-around">
+                <button class="btn btn-success mr-3 add-department" type="button" id="add-department"><i class="fas fa-plus text-white"></i></button>
+                <input class="checkToValid form-control col" type="text" id="department_0" placeholder="Отдел №1">
+            </div>
+
+            <div id="more-department"></div>
+
+            <input class="btn btn-primary mt-3" type="submit" id="modalSubmit" value="Добавить">
+        </div>
+    </form>
+</div>
+</div>
+
+<!-- Modal window -->
+<div id="modalInfo" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h1 class="modal-title text-success">Успешно</h1>
+            </div>
+
+            <div class="modal-body">
+                <h3 id="modal-success"></h3>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="modalError" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h1 class="modal-title text-danger">Ошибка</h1>
+            </div>
+
+            <div class="modal-body">
+                <h3 id="modal-error"></h3>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='Simple_Fetch.js')}}"></script>
+<script src="{{ url_for('static', filename='admin/pharmacy_add.js')}}"></script>
+{% endblock %}

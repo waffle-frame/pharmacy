@@ -1,0 +1,155 @@
+{% extends 'selller/base.html' %}
+{% set name = name %}
+{% block idbody %}bg-gradient-primary{% endblock %}
+
+
+{% block title %}
+Добавление нового лекарства
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- Основной заголовок-->
+    <h1 class="h3 mb-4 text-gray-800 text-center">Добавление лекарства</h1>
+
+    <a onclick="location.href = document.referrer" class="btn btn-light text-primary position-absolute"> <i class="fas fa-arrow-left"> </i>
+        Вернуться </a>
+
+
+    <form method="POST">
+        <div class="container w-50">
+
+            <div class="row form-group">
+                <div class="col">
+                    <label for="exampleFormControlInput1">Аптека</label>
+                    <input class="form-control" required readonly value="{{data.pharmacy.name}}" id="exampleFormControlInput1" type="text">
+                </div>
+
+                <div class="col">
+                    <label for="department">Отдел</label><br>
+                    <input class="form-control" required readonly value="{{data.name}}" id="department" type="text">
+                </div>
+            </div>
+
+
+            <div class="row form-cotrol mb-5 ">
+
+                <div class="col">
+                    <label for="category">Категория</label>
+                    <select class="checkToValid form-control" id="category" name="category" required>
+                        <option disabled selected>Укажите категорию</option>
+                        <option value="1">Лекарственные средства</option>
+                        <option value="2">Витамины и БАД</option>
+                        <option value="3">Лечебные травы</option>
+                        <option value="4">Мама и малыш</option>
+                        <option value="5">Первая помощь</option>
+                        <option value="6">Мед. приборы</option>
+                        <option value="7">Мед. изделия</option>
+                    </select>
+                </div>
+
+                <div class="col">
+                    <label for="subcategory">Подкатегория</label>
+                    <select class="checkToValid form-control" id="subcategory" name="subcategory" required>
+                        <option disabled>Укажите значение после выбора категории</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label for="barcode">Штрих-код</label>
+                <input class="checkToValid form-control" min="0" required name="barcode" id="barcode" type="number"
+                    placeholder="Введите данные">
+            </div>
+
+            <div class="form-group">
+                <label for="name">Наименование</label>
+                <input class="checkToValid form-control" required name="name" id="name" type="text"
+                    placeholder="Введите данные">
+            </div>
+
+            <div class="form-group">
+                <label for="price">Цена</label>
+                <input class="checkToValid form-control" min="0" required name="price" id="price" type="number"
+                    step="0.1" placeholder="Введите данные">
+            </div>
+
+            <div class="row form-group">
+                <div class="col">
+                    <label for="quantity">Количество</label>
+                    <!-- id = quantityY for to avoid error on console -->
+                    <input class="checkToValid form-control" min="0" required name="quantity" id="quantity"
+                        type="number" step="0.1" placeholder="Введите данные">
+                </div>
+
+                <div class="col mb-3">
+                    <label for="unit">Ед. измерения</label>
+                    <br>
+                    <select class="checkToValid form-control" name="unit" id="unit">
+                        <option disabled>Тип измерения</option>
+                        <option value="шт">шт</option>
+                        <option value="литр">литр</option>
+                        <option value="кг">кг</option>
+                        <option value="мг">мг</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="dateLimit">Срок годности</label>
+                <input class="checkToValid form-control" required name="shelf_life" id="shelf_life" type="date"
+                    placeholder="Введите данные">
+            </div>
+
+            <input id="modalSubmit" type="submit" value="Добавить" class="btn btn-primary mt-3">
+            <button type="reset" class="btn btn-primary mt-3">Сбросить</button>
+
+        </div>
+    </form>
+</div>
+</div>
+
+<!-- Modal window -->
+<div id="modalInfo" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h1 class="modal-title text-success">Успешно</h1>
+            </div>
+
+            <div class="modal-body">
+                <h3 id="modal-success"></h3>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="modalError" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h1 class="modal-title text-danger">Ошибка</h1>
+            </div>
+
+            <div class="modal-body">
+                <h3 id="modal-error"></h3>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='selller/Simple_Fetch.js')}}"></script>
+<script src="{{ url_for('static', filename='selller/subcategory.js')}}"></script>
+{% endblock %}

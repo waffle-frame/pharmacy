@@ -1,0 +1,64 @@
+{% extends 'admin/base.html' %}
+{% set name = name %}
+{% set dropdownPharmacies = dropdownPharmacies %} 
+
+
+{% block title %} Список закупов {% endblock %}
+
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-2 text-gray-800">Список закупов</h1>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <a onclick="location.href = document.referrer" class="btn btn-light text-primary"><i class="fas fa-arrow-left"></i> Вернуться </a>
+            <a href="/admin/purchase/add/{{pharmacy}}" class="btn btn-light text-primary"><i class="fas fa-plus"></i> Создать закуп </a>
+        </div>
+
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+                    <thead>
+                        <tr>
+                            <th> № </th>
+                            <th> Дата закупа </th>
+                            <th> Аптека </th>
+                            <th> Отдел </th>
+                            <th> Поставщик </th>
+                            <th> Товар </th>
+                            <th> Кол-во </th>
+                            <th> Cумма </th>
+                            <th> Cумма cо скидкой </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for i in purchaseList %}
+                        <tr>
+                            <td> {{loop.index}} </td>
+                            <td> {{i.date}} </td>
+                            <td> {{i.pharmacy.name}}</td>
+                            <td> {{i.department.name}} </td>
+                            <td> {{i.provide}} </td>
+                            <td> {{i.drug.name}} </td>
+                            <td> {{i.quantity}} шт.</td>
+                            <td> {{i.total_sum}} сом.</td>
+                            <td> {{i.drug.price_with_discount}} сом. </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table> 
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='js/demo/datatables-demo.js')}}"></script>
+<script src="{{ url_for('static', filename='/vendor/datatables/jquery.dataTables.min.js')}}"></script>
+{% endblock %}

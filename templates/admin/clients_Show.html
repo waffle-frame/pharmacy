@@ -1,0 +1,74 @@
+{% extends 'admin/base.html' %}
+{% set name = name %}
+{% set dropdownPharmacies = dropdownPharmacies %} 
+
+
+{% block title %} Клиенты {% endblock %}
+
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-2 text-gray-800">Клиенты</h1>
+
+    <!-- Таблица постоянных клиентов -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <a onclick="location.href = document.referrer" class="btn btn-light text-primary"><i class="fas fa-arrow-left"></i> Вернуться</a>
+            <a href="/admin/clients/add/{{pharmacy}}" class="btn btn-light text-primary"><i class="fas fa-plus"></i> Добавить клиента </a>
+        </div>
+
+
+        <div class="card-body">
+            <div class="table-responsive">
+
+                <table class="table table-hover " id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>ФИО</th>
+                            <th>Тип клиента</th>
+                            <th>Телефон</th>
+                            <th>E-mail</th>
+                            <th>Баланс</th>
+                        </tr>
+                    </thead>
+
+                    {% if 11 > 10 %}
+                    <tfoot>
+                        <tr>
+                            <th>№</th>
+                            <th>ФИО</th>
+                            <th>Тип клиента</th>
+                            <th>Телефон</th>
+                            <th>E-mail</th>
+                            <th>Баланс</th>
+                        </tr>
+                    </tfoot>
+                    {% endif %}
+
+                    <tbody>
+                        {% for i in clients %}
+                        {% set outer_loop = loop %}
+                        <tr class="client-row" id="{{i.id}}">
+                            <td> {{loop.index}} </td>
+                            <td> {{i.fio}} </td>
+                            <td> {{i.type_client}} </td>
+                            <td> {{i.phone}} </td>
+                            <td> {{i.email}} </td>
+                            <td> {{i.balance}} </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='js/demo/datatables-demo.js')}}"></script>
+<script src="{{ url_for('static', filename='/vendor/datatables/jquery.dataTables.min.js')}}"></script>
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends 'selller/base.html' %}
+{% set name = name %}
+{% block name %}  {% endblock %}
+{% block idbody %}bg-gradient-primary{% endblock %}
+
+{%block title %} Новая аптека {% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <h1 class="h3 mb-4 text-gray-800 text-center">Добавление клиента</h1>
+
+    <a onclick="location.href = document.referrer" class="btn btn-light text-primary position-absolute"> <i class="fas fa-arrow-left"></i>  Вернуться </a>
+
+
+    <form method="POST" id="POST">
+        <div class="container w-50">
+
+            <label for="name">Ф.И.О</label>
+            <div class="form-group">
+                <input class="checkToValid form-control" required name="name" id="name" placeholder="Инициалы клиента">
+            </div>
+
+            <label for="type_client">Тип клиента</label>
+            <div class="form-group">
+                <select class="checkToValid form-control" name="type_client" id="type_client">
+                    <option value="Пенсионер"> Пенсионер</option>
+                    <option value="Льготник"> Льготник</option>
+                    <option value="Инвалид"> Инвалид</option>
+                </select>
+            </div>
+
+            <label for="phone">Моб.телефон</label>
+            <div class="form-group">
+                <input class="checkToValid form-control" required name="phone" id="phone" type="number" placeholder="93XXXXXXX">
+            </div>
+
+            <label for="email">E-mail (Необязательно)</label>
+            <div class="form-group">
+                <input class="form-control"  name="email" id="email" type="email"  placeholder="example@mail.com">
+            </div>
+
+            <label for="balance">Баланс (Необязательно)</label>
+            <div class="form-group">
+                <input class="form-control" required name="balance" id="balance" type="number"  placeholder="Баланс клиента">
+            </div>
+
+            <input id="modalSubmit" type="submit" value="Добавить" class="btn btn-primary mt-3">
+
+        </div>
+    </form>
+
+</div>
+</div>
+
+<!-- Modal window -->
+<div id="modalInfo" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h1 class="modal-title text-success">Успешно</h1>
+            </div>
+
+            <div class="modal-body">
+                <h3 id="modal-success"></h3>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="modalError" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h1 class="modal-title text-danger">Ошибка</h1>
+            </div>
+
+            <div class="modal-body">
+                <h3 id="modal-error"></h3>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    const email = document.getElementById('email')
+    const balance = document.getElementById('balance')
+    email.addEventListener('input', () => {
+        if (email.value.length == 0) email.classList.remove('checkToValid')
+        else email.classList.add('checkToValid')
+    })
+    balance.addEventListener('input', () => {
+        if (balance.value.length == 0) balance.classList.remove('checkToValid')
+        else balance.classList.add('checkToValid')
+    })
+    
+</script>
+
+<script src="{{ url_for('static', filename='Simple_Fetch.js')}}"></script> 
+{% endblock  %}

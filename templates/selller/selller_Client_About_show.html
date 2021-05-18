@@ -1,0 +1,86 @@
+{% extends 'selller/base.html' %}
+{% set name = name %}
+{% block idbody %}bg-gradient-primary{% endblock %}
+
+
+{% block title %}
+Список препаратов
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid mt-5">
+    <div class="row mt-5">
+        
+        
+        <div class="col-4">
+            <div
+                style="width:auto; height: 22rem; background: #fff;padding: 30px;box-shadow: 0px 0px 39px 0px rgba(153,153,153,0.2);border-radius: 5px;">
+                <h3 class="row mb-3 text-gray-800">О клиенте</h3>
+                <div class="row">
+                    <div class="col-4">
+                        <h4><b> Ф.И.О: </b> </h4>
+                        <h4><b>Тип клиента:</b></h4>
+                        <h4><b>Моб.телефон:</b></h4>
+                        <h4><b>E-mail: </b></h4>
+                        <h4><b>Баланс: </b></h4>
+                    </div>
+
+                    <div class="col">
+                        <h4>{{client.fio}}</h4>
+                        <h4>{{client.type_client}} </h4>
+                        <h4>{{client.phone}} </h4>
+                        <h4>{{client.email}} </h4>
+                        <h4>{{client.balance}} </h4>    
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col ml-3">
+            <div class="card-body">
+                <div style="width:auto; height: auto; background: #fff;padding: 30px;box-shadow: 0px 0px 39px 0px rgba(153,153,153,0.2);border-radius: 5px;">
+                    <h1 class="h3 mb-2 text-gray-800">История покупок</h1>
+
+
+                    <div class="table-responsive">
+
+                        <table class="table table-hover " id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>№</th>
+                                    <th>Кол-во покупок</th>
+                                    <th>Сумма</th>
+                                    <th>Тип оплаты</th>
+                                    <th>Дата</th>
+                                    <th>Время</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for i in history %}
+                                {% set outer_loop = loop %}
+                                <tr class="client-row" id="{{i.id}}">
+                                    <td> {{loop.index}} </td>
+                                    <td> {{i.payment.total_sold_product}} </td>
+                                    <td> {{i.payment.total_amount}} </td>
+                                    <td> {{i.payment.payment_type}} </td>
+                                    <td> {{i.payment.date}} </td>
+                                    <td> {{i.payment.time}} </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='js/demo/datatables-demo.js')}}"></script>
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends 'selller/base.html' %}
+{% set name = name %}
+{% block idbody %}bg-gradient-primary{% endblock %}
+
+
+{% block title %} Список препаратов {% endblock %}
+
+
+{% block content %}
+<div class="container-fluid" style="height: 80%;">
+    <h1 class="h3 mb-4 text-gray-800 text-center">Перемещение</h1>
+
+    <a onclick="location.href = document.referrer" class="btn btn-light text-primary"><i class="fas fa-arrow-left"></i>Вернуться</a>
+
+    <form method="POST" class="row d-flex justify-content-center">
+        <div class="transfer-shadow-box">
+            <h1 class="h3 mb-4 text-gray-800">Откуда</h1>
+            <h4> <b>Аптека : </b> {{datas[0].pharmacy.name}} </h4>
+            <h4> <b>Отдел : </b> {{datas[0].department.name}}</h4>
+            <h4> <b>Препарат : </b> {{datas[0].name}} </h4>
+            <h4> <b>Количество : </b> {{datas[0].quantity}} шт.</h4>
+        </div>
+
+        <h1 style="font-size:3.5rem;display:flex;align-items:center;margin:3rem">
+            <i class="fas fa-truck-loading"></i>
+            <i class="fas fa-long-arrow-alt-right"></i>
+        </h1>
+
+        <div class="transfer-shadow-box">
+            <h1 class="h3 mb-4 text-gray-800">Куда</h1>
+            <h6><b> Аптека: </b></h6>
+
+            <input disabled class="form-control" id="pharmacy" value="{{datas[0].pharmacy.name}}">
+
+            <h6><b>Отдел : </b></h6>
+            <select class="checkToValid form-control" id="department"> 
+                {% for i in datas[1] %}
+                    {% if i.id == datas[0].department.id %}
+                    <option disabled value="i.id">{{i.name}}</option>
+                    {% else %}
+                    <option value="{{i.id}}">{{i.name}}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            <h6><b>Количество : </b></h6>
+            <input class="checkToValid form-control" type="number" id="quantity" min="0" step="0.1">
+
+            <input class="btn btn-primary mt-3" type="submit" id="modalSubmit" value="Переместить">
+        </div>
+    </form>
+</div>
+</div>
+
+<!-- Modal window -->
+<div id="modalInfo" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h1 class="modal-title text-success">Успешно</h1>
+            </div>
+
+            <div class="modal-body">
+                <h3 id="modal-success"></h3>
+            </div>
+
+        </div>
+    </div>
+</div>  
+<div id="modalError" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h1 class="modal-title text-danger">Ошибка</h1>
+            </div>
+
+            <div class="modal-body">
+                <h3 id="modal-error"></h3>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='Simple_Fetch.js')}}"></script>
+{% endblock %}
