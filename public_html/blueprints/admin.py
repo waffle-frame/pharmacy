@@ -1,3 +1,4 @@
+from operator import methodcaller
 from time import perf_counter
 import barcode
 from peewee import Query
@@ -59,9 +60,6 @@ def MainGet():
         return render_template('admin/index.html', dropdownPharmacies=DropdownPharmacies(), name=GetName())
     
     if request.method == 'UPDATE':
-        temp_month = 1
-        temp_amount = 0
-
         data = {}
         profit_day = 0.0
         profit_year = 0.0
@@ -100,7 +98,42 @@ def Logout():
     return redirect('/login')
 
 
+@bp.route('analytics', methods=['GET', 'UPDATE', 'PUT'])
+def Analytics():
+    if request.method == 'GET':
+       return render_template('admin/analytics.html')
 
+    if request.method == 'UPDATE':
+        data = {}
+        profit_day = 0.0
+        profit_year = 0.0
+        profit_month = 0.0
+        monthly_profit_12 = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0, 11:0, 12:0}
+        dates = date_generate()
+        networkid = session.get('networkid')
+
+        annual_profit = Payment.select().order_by(Payment.date).where(
+            Payment.networkID==networkid, 
+            Payment.date.between(dates[2], dates[3]))
+        monthly_report = Payment.select().order_by(Payment.date).where(
+            Payment.networkID==networkid, 
+            Payment.date.between(dates[0], dates[1]))
+
+        for i in annual_profit:
+            monthly_profit_12[i.date.month] += i.total_amount
+            profit_year += i.total_amount
+        
+        if monthly_report != None:
+            for i in monthly_report:
+                profit_month += i.total_amount
+
+        print(monthly_profit_12)
+        data['profit_day'] = profit_day
+        data['profit_year'] = profit_year
+        data['profit_month'] = profit_month
+        data['monthly_profit_12'] = monthly_profit_12
+
+        return jsonify(data)
 
 # PHARMACIES BLOCK
 #* ВЫВОД

@@ -60,8 +60,8 @@
 works properly when clicked or hovered */
 html .ui-button.ui-state-disabled:hover,
 html .ui-button.ui-state-disabled:active {
-	border: 1px solid #c5c5c5;
-	background: #f6f6f6;
+	border: 1px solid transparent;
+	background: transparent;
 	font-weight: normal;
 	color: #454545;
 }
@@ -133,13 +133,13 @@ a.ui-button:active,
 .ui-state-highlight,
 .ui-widget-content .ui-state-highlight,
 .ui-widget-header .ui-state-highlight {
-	border: 1px solid #dad55e;
-	background: #fffa90;
+	border: 1px solid #f6f6f6;
+	background: #e8e8e8;
 	color: #777620;
 }
 .ui-state-checked {
-	border: 1px solid #dad55e;
-	background: #fffa90;
+	border: 1px solid #e8e8e8;
+	background: #f7f7f7;
 }
 .ui-state-highlight a,
 .ui-widget-content .ui-state-highlight a,

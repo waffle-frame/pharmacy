@@ -9,10 +9,14 @@
     <meta name="author" content="Nappy?">
     <title>{% block title %}{% endblock %}</title>
 
-    <link href="{{ url_for('static', filename='css/sb-admin-2.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{ url_for('static', filename='img/favicon.ico')}}" rel="shortcut icon" type="image/x-icon">
-    <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{ url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='vendor/jqueryUI/jquery-ui.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='vendor/jqueryUI/jquery-ui.theme.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='vendor/jqueryUI/jquery-ui.structure.css') }}" rel="stylesheet" type="text/css">
+
+    <link href="{{ url_for('static', filename='css/sb-admin-2.css') }}" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon">
+    <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 </head>
 
@@ -109,13 +113,14 @@
                     <span>Сотрудники (ver 2.0)</span>
                 </a>
             </li>
-
+            
             <hr class="sidebar-divider d-none d-md-block">
-
+            
             <!-- Аналитика (Не опцианально) -->
             <li class="nav-item">
-                <a class="nav-link">
-                    <span>Аналитика (ver 3.0)</span>
+                <a class="nav-link" href="/admin/analytics">
+                    <i class="fas fa-users"></i>
+                    <span>Аналитика (ver 3.3)</span>
                 </a>
             </li>
         </ul>
@@ -138,6 +143,9 @@
                         <i class="fas fa-sync-alt text-success"></i>
                     </button>
                 
+                    <button class="btn" id="buttonHere"><i class="fas fa-calendar"></i></button>
+                    <div class="ui-front" id="datepicker"></div>
+
                     <span id="dateToDay" style="margin-left: 45%;position: absolute;"></span>
 
                     <!-- Основные компоненты nav-panel -->
@@ -338,8 +346,8 @@
 
 <!-- MAIN FUNCTION ON ALL FILES -->
 <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js')}}"></script>
+<script src="{{ url_for('static', filename='vendor/jqueryUI/jquery-ui.js')}}"></script>
 <script src="{{ url_for('static', filename='js/sb-admin-2.js')}}"></script>
-<!-- <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.min.js')}}"></script> -->
 <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{ url_for('static', filename='vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 

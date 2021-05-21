@@ -15,16 +15,12 @@
     <link href="{{ url_for('static', filename='vendor/jqueryUI/jquery-ui.theme.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ url_for('static', filename='vendor/jqueryUI/jquery-ui.structure.css') }}" rel="stylesheet" type="text/css">
 
-    
     <link href="{{ url_for('static', filename='css/sb-admin-2.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='css/calculator.css') }}" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon">
-    <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet"
-        type="text/css">
-    <link href="{{ url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet"
-        type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"> -->
 </head>
 
 
@@ -109,16 +105,18 @@
 
                     <div class="topbar-divider d-sm-block"></div>
 
-                    <button class="btn btn-link rounded-circle" onclick="window.location.reload()"
-                        title="Обновить страницу">
+                    <button class="btn btn-link rounded-circle" onclick="window.location.reload()"title="Обновить страницу">
                         <i class="fas fa-sync-alt text-success"></i>
                     </button>
 
                     <button class="btn" id="buttonHere"><i class="fas fa-calendar"></i></button>
                     <div class="ui-front" id="datepicker"></div>
-
+                    
                     <span id="dateToDay" style="margin-left: 45%;position: absolute;"></span>
-
+                    
+                    <button class="btn" id="calculator-call"><i class="fas fa-calculator"></i></button>
+                    <div id="calculator-block" style="margin-left: 12rem;position:absolute;width: 205px;margin-top: 25rem; z-index:100"></div>
+                    
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Nav Item - Alerts -->
@@ -320,6 +318,7 @@
 <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{ url_for('static', filename='vendor/jqueryUI/jquery-ui.js')}}"></script>
 <script src="{{ url_for('static', filename='js/sb-admin-2.js')}}"></script>
+<script src="{{ url_for('static', filename='calculator.js')}}"></script>
 <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{ url_for('static', filename='vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 <!-- <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.min.js')}}"></script> -->
